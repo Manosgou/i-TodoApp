@@ -19,14 +19,26 @@ const renderScene = SceneMap({
   list: TasksListView,
 });
 
-// interface IState {
-//   index: number;
-//   routes: ;
-//   todos: Array;
-// }
+interface Todo {
+  date: String;
+  has_reminder: boolean;
+  task_id: String;
+  title: String;
+}
+
+interface Route {
+  key: String;
+  title: String;
+}
+
+interface IState {
+  index: number;
+  routes: Route[];
+  todos: Todo[];
+}
 
 class MainTabView extends React.Component {
-  state = {
+  state: IState = {
     index: 0,
     routes: [
       {key: 'create', title: 'Create task'},

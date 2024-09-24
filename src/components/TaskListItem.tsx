@@ -3,6 +3,7 @@ import {View, Text, Pressable, TextInput, Switch} from 'react-native';
 import DatePicker from 'react-native-date-picker';
 import notifee from '@notifee/react-native';
 import {TodosContext} from '../context';
+import moment from 'moment';
 
 interface IProps {
   task_id: String;
@@ -99,7 +100,17 @@ class TaskListItem extends React.Component<IProps> {
         ) : (
           <View>
             <Text style={{fontWeight: 'bold', fontSize: 20}}>Title:</Text>
-            <Text>{this.props.title}</Text>
+            <Text style={{fontSize: 17}}>{this.props.title}</Text>
+            <Text style={{fontStyle: 'italic', fontSize: 12}}>
+              {this.props.hasReminder
+                ? 'Reminder on: ' +
+                  moment(new Date(this.state.date.toString())).format(
+                    'DD/MM/YYYY',
+                  ) +
+                  ' at ' +
+                  moment(new Date(this.state.date.toString())).format('HH:MM')
+                : 'No reminder'}
+            </Text>
           </View>
         )}
         <View
