@@ -58,9 +58,6 @@ class CreateTaskView extends React.Component {
       const trigger: TimestampTrigger = {
         type: TriggerType.TIMESTAMP,
         timestamp: this.state.date.getTime(),
-        alarmManager: {
-          allowWhileIdle: true,
-        },
       };
 
       await notifee.createTriggerNotification(
@@ -69,6 +66,7 @@ class CreateTaskView extends React.Component {
           title: task.title,
           android: {
             channelId,
+            importance: AndroidImportance.HIGH,
           },
         },
         trigger,
@@ -89,9 +87,6 @@ class CreateTaskView extends React.Component {
       titleError: false,
       dateError: false,
     });
-    notifee
-      .getTriggerNotificationIds()
-      .then(ids => console.log('All trigger notifications: ', ids));
   };
 
   handleInputChange = (inputName: string, inputValue: string) => {
@@ -115,7 +110,7 @@ class CreateTaskView extends React.Component {
         </Text>
         <TextInput
           placeholder="Add a title"
-          value={this.state.title}
+          value={this.state.title.toString()}
           onChangeText={value => this.handleInputChange('title', value)}
           maxLength={20}
           style={{
@@ -127,7 +122,7 @@ class CreateTaskView extends React.Component {
           }}
         />
         {this.state.titleError ? (
-          <Text style={{color: 'red'}}>Insert a valid title to the task</Text>
+          <Text style={{color: 'red'}}>Insert a valid title</Text>
         ) : null}
         <View
           style={{
@@ -154,7 +149,7 @@ class CreateTaskView extends React.Component {
         ) : null}
         {this.state.dateError ? (
           <Text style={{color: 'red'}}>
-            Date must be grater than the current date
+            Reminder date must be grater than the current date
           </Text>
         ) : null}
         <Pressable

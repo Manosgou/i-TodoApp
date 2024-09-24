@@ -1,6 +1,6 @@
 import React from 'react';
 import {FlatList, View, Text} from 'react-native';
-import TaskListItem from '../components/TodoListItem';
+import TaskListItem from '../components/TaskListItem';
 import {TodosContext} from '../context';
 
 class TasksListView extends React.Component {

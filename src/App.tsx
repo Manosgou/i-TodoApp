@@ -16,9 +16,17 @@ class App extends React.Component {
   render() {
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="MainView">
-          <Stack.Screen name="LoginView" component={LoginView} />
-          <Stack.Screen name="MainView" component={MainTabView} />
+        <Stack.Navigator initialRouteName="LoginView">
+          <Stack.Screen
+            name="LoginView"
+            component={LoginView}
+            options={{title: 'Login'}}
+          />
+          <Stack.Screen
+            name="MainView"
+            component={MainTabView}
+            options={{title: 'i-TodoApp'}}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     );

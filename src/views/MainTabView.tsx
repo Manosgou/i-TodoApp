@@ -29,8 +29,8 @@ class MainTabView extends React.Component {
   state = {
     index: 0,
     routes: [
-      {key: 'create', title: 'Create'},
-      {key: 'list', title: 'List'},
+      {key: 'create', title: 'Create task'},
+      {key: 'list', title: 'Tasks list'},
     ],
     todos: [],
   };
@@ -52,9 +52,9 @@ class MainTabView extends React.Component {
   };
 
   updateTask = async (
-    taskId: string,
-    title: string,
-    date: string,
+    taskId: String,
+    title: String,
+    date: String,
     hasReminder: boolean,
   ) => {
     let tasks = [...this.state.todos];
@@ -62,7 +62,6 @@ class MainTabView extends React.Component {
     tasks[taskIndex].title = title;
     tasks[taskIndex].date = date;
     tasks[taskIndex].has_reminder = hasReminder;
-    console.log(tasks[taskIndex]);
     this.setState({todos: tasks}, async () => {
       await DefaultPreference.set('@todos', JSON.stringify(this.state.todos));
     });
@@ -80,29 +79,23 @@ class MainTabView extends React.Component {
         const trigger: TimestampTrigger = {
           type: TriggerType.TIMESTAMP,
           timestamp: new Date(date.toString()).getTime(),
-          alarmManager: {
-            allowWhileIdle: true,
-          },
         };
         await notifee.createTriggerNotification(
           {
-            id: taskId,
-            title: title,
+            id: taskId.toString(),
+            title: title.toString(),
             android: {
               channelId,
+              importance: AndroidImportance.HIGH,
             },
           },
           trigger,
         );
         break;
       case false:
-        await notifee.cancelTriggerNotification(taskId);
+        await notifee.cancelTriggerNotification(taskId.toString());
         break;
     }
-
-    notifee
-      .getTriggerNotificationIds()
-      .then(ids => console.log('All trigger notifications: ', ids));
   };
 
   deleteTask = async taskId => {

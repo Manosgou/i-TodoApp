@@ -78,7 +78,7 @@ class TaskListItem extends React.Component<IProps> {
             {this.state.hasReminder ? (
               <View>
                 <DatePicker
-                  style={{width: 200, height: 200}}
+                  style={{width: 250, height: 200}}
                   date={
                     this.state.date
                       ? new Date(this.state.date.toString())
@@ -90,7 +90,7 @@ class TaskListItem extends React.Component<IProps> {
                 />
                 {this.state.dateError ? (
                   <Text style={{color: 'red'}}>
-                    Date must be grater than the current date
+                    Reminder date must be grater than the current date
                   </Text>
                 ) : null}
               </View>
@@ -175,7 +175,9 @@ class TaskListItem extends React.Component<IProps> {
               <Pressable
                 onPress={async () => {
                   if (this.state.hasReminder) {
-                    await notifee.cancelTriggerNotification(this.props.task_id);
+                    await notifee.cancelTriggerNotification(
+                      this.props.task_id.toString(),
+                    );
                   }
                   this.context.deleteTask(this.props.task_id);
                 }}
